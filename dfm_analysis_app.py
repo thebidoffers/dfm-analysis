@@ -753,13 +753,13 @@ def main():
             col1, col2 = st.columns(2)
             
             with col1:
-                st.markdown("""
+                st.markdown(f"""
                 <div class="insight-box">
                     <strong>📊 What the numbers mean:</strong>
                     <ul>
-                        <li><strong>HHI = 0.114:</strong> Market is moderately to highly concentrated</li>
-                        <li><strong>Effective N ≈ 9:</strong> Activity is concentrated into ~9 names</li>
-                        <li><strong>7.5x multiplier:</strong> Market is 7.5x more concentrated than even distribution</li>
+                        <li><strong>HHI = {hhi_metrics['hhi']:.3f}:</strong> Market is {'highly' if hhi_metrics['hhi'] > 0.10 else 'moderately'} concentrated</li>
+                        <li><strong>Effective N ≈ {hhi_metrics['effective_n']:.0f}:</strong> Activity is concentrated into ~{hhi_metrics['effective_n']:.0f} names</li>
+                        <li><strong>{hhi_metrics['concentration_mult']:.1f}x multiplier:</strong> Market is {hhi_metrics['concentration_mult']:.1f}x more concentrated than even distribution</li>
                     </ul>
                 </div>
                 """, unsafe_allow_html=True)
@@ -768,7 +768,7 @@ def main():
                 st.markdown(f"""
                 <div class="warning-box">
                     <strong>⚠️ Key Implication:</strong>
-                    <p>DFM's listed value traded in 2025 is as concentrated as if only 
+                    <p>DFM's listed value traded is as concentrated as if only 
                     <strong>~{hhi_metrics['effective_n']:.0f} names</strong> shared trading value equally.</p>
                     <p>This means market liquidity is materially dependent on a small core of stocks.</p>
                 </div>
@@ -793,7 +793,7 @@ def main():
             st.markdown(f"""
             <div class="warning-box">
                 <strong>🔴 DFM Classification: HIGHLY CONCENTRATED</strong>
-                <p>With only <strong>~{hhi_metrics['effective_n']:.0f} effective stocks</strong> driving liquidity out of 66 listed securities, 
+                <p>With only <strong>~{hhi_metrics['effective_n']:.0f} effective stocks</strong> driving liquidity out of {analyzer.num_stocks} listed securities, 
                 DFM exhibits high trading concentration. The market is <strong>{hhi_metrics['concentration_mult']:.1f}x more concentrated</strong> 
                 than an evenly distributed market would be.</p>
             </div>
